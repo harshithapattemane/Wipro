@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<style>
+    :root {
+        --accent: #2563eb;
+        --accent-2: #1e40af;
+        --border: #e5e7eb;
+        --muted: #6b7280;
+        --danger: #b91c1c;
+        --bg: #f8fafc;
+    }
+    body { font-family: Arial, sans-serif; margin: 24px; background: var(--bg); }
+    header { margin-bottom: 16px; }
+    h2 { margin: 0 0 8px 0; }
+    nav a, nav button { display: inline-block; margin-right: 8px; }
+    .btn { padding: 8px 12px; border: 1px solid var(--border); background: #fff; border-radius: 6px; text-decoration: none; color: #111; }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); }
+    .btn-danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+    .container { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+    .toolbar { display:flex; align-items:center; justify-content: space-between; margin-bottom: 12px; gap: 12px; flex-wrap: wrap; }
+    .search { display:flex; gap:8px; align-items:center; }
+    .search input { padding: 8px 10px; border:1px solid var(--border); border-radius: 6px; width: 240px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
+    thead th { border-bottom: 2px solid var(--border); background: #f3f4f6; }
+    tr:hover td { background: #fafafa; }
+    .muted { color: var(--muted); }
+    /* Visible badge: simple rectangular white box */
+    .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; border:1px solid var(--border); background:#fff; color:#111; }
+    .actions { display:flex; gap:8px; align-items:center; }
+    .spacer { flex:1; }
+    form.inline { display:inline; }
+    .empty { padding: 16px; text-align:center; color: var(--muted); }
+    .empty-card { border:1px dashed var(--border); background:#f9fafb; padding:24px; border-radius:10px; }
+    .empty-title { font-size:18px; color:#111; margin:0 0 6px 0; }
+    .empty-sub { margin:0 0 14px 0; }
+    .pill { font-size:12px; color:var(--muted); }
+    @media (max-width: 640px) {
+        .search input { width: 100%; }
+        .toolbar { flex-direction: column; align-items: stretch; }
+    }
+    /* success banner spacing to align with new view styling */
+    .alert-success { margin:0 0 12px 0; padding:10px 12px; border:1px solid #a7f3d0; background:#ecfdf5; color:#065f46; border-radius:6px; }
+    </style>
+
+<header>
+    <h2>All Songs</h2>
+    <nav>
+        <a class="btn btn-primary" href="/songs/ui/add">Add New Song</a>
+        <a class="btn" href="/admin/home">Home</a>
+        <form method="post" action="/admin/logout" class="inline">
+            <button type="submit" class="btn">Logout</button>
+        </form>
+    </nav>
+</header>
+
+<div class="container">
+    <div th:if="${success}" class="alert-success"><span th:text="${success}"></span></div>
+    <div class="toolbar">
+        <form class="search" method="get" action="/songs/ui/list">
+            <input type="text" name="q" placeholder="Search by name..." th:value="${q}">
+            <button type="submit" class="btn">Search</button>
+            <a class="btn" th:if="${q != null and !#strings.isEmpty(q)}" href="/songs/ui/list">Clear</a>
+            <span class="pill" th:if="${q != null and !#strings.isEmpty(q)}">Results for “<span th:text="${q}"></span>”</span>
+        </form>
+        <span class="spacer"></span>
+        <a class="btn" href="/songs/ui/list">Refresh</a>
+    </div>
+
+    <div th:if="${#lists.isEmpty(songs)}" class="empty">
+        <div class="empty-card" th:if="${q != null and !#strings.isEmpty(q)}">
+            <p class="empty-title">No songs matched your search</p>
+            <p class="empty-sub">Try a different keyword or create a new song.</p>
+            <div>
+                <a class="btn" href="/songs/ui/list">Clear search</a>
+                <a class="btn btn-primary" href="/songs/ui/add">Add New Song</a>
+            </div>
+        </div>
+        <div class="empty-card" th:if="${q == null or #strings.isEmpty(q)}">
+            <p class="empty-title">Your catalog is empty</p>
+            <p class="empty-sub">Start by creating your first song.</p>
+            <div>
+                <a class="btn btn-primary" href="/songs/ui/add">Add New Song</a>
+            </div>
+        </div>
+    </div>
+
+    <table th:if="${!#lists.isEmpty(songs)}">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Singer</th>
+            <th>Album</th>
+            <th>Visible</th>
+            <th style="width:220px;">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="s : ${songs}">
+            <td th:text="${s.name}"></td>
+            <td th:text="${s.singer}"></td>
+            <td th:text="${s.album}"></td>
+            <td>
+                <span class="badge" th:if="${s.visible}">Yes</span>
+                <span class="badge" th:if="${!s.visible}">No</span>
+            </td>
+            <td>
+                <div class="actions">
+                    <a class="btn" th:href="@{'/songs/ui/view/' + ${s.id}}">&#9658; Play</a>
+                    <a class="btn" th:href="@{'/songs/ui/edit/' + ${s.id}}">Edit</a>
+                    <form th:action="@{'/songs/ui/delete/' + ${s.id}}" method="post" class="inline">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this song?');">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<style>
+    :root {
+        --accent: #2563eb;
+        --accent-2: #1e40af;
+        --border: #e5e7eb;
+        --bg: #f8fafc;
+    }
+    body { font-family: Arial, sans-serif; margin: 24px; background: var(--bg); }
+    header { margin-bottom: 16px; }
+    h2 { margin: 0 0 8px 0; }
+    nav a, nav button { display: inline-block; margin-right: 8px; }
+    .btn { padding: 8px 12px; border: 1px solid var(--border); background: #fff; border-radius: 6px; text-decoration: none; color: #111; }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); }
+    .container { background: #fff; border:1px solid var(--border); border-radius:10px; padding:16px; max-width:720px; }
+    form .row { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+    label { width: 140px; color:#374151; }
+    input[type="text"], input[type="date"] { flex:1; padding:8px 10px; border:1px solid var(--border); border-radius:6px; }
+    .actions { display:flex; gap:8px; margin-top:8px; }
+    </style>
+
+<header>
+    <h2>Edit Song</h2>
+    <nav>
+        <a class="btn" href="/songs/ui/list">Back to all songs</a>
+        <a class="btn" href="/admin/home">Home</a>
+        <form method="post" action="/admin/logout" style="display:inline;">
+            <button type="submit" class="btn">Logout</button>
+        </form>
+    </nav>
+</header>
+
+<div class="container">
+    <form method="post" th:action="@{'/songs/ui/edit/' + ${song.id}}">
+        <div class="row">
+            <label for="name">Name</label>
+            <input id="name" name="name" th:value="${song.name}" required autofocus>
+        </div>
+        <div class="row">
+            <label for="singer">Singer</label>
+            <input id="singer" name="singer" th:value="${song.singer}">
+        </div>
+        <div class="row">
+            <label for="musicDirector">Music Director</label>
+            <input id="musicDirector" name="musicDirector" th:value="${song.musicDirector}">
+        </div>
+        <div class="row">
+            <label for="album">Album</label>
+            <input id="album" name="album" th:value="${song.album}">
+        </div>
+        <div class="row">
+            <label for="releaseDate">Release Date</label>
+            <input id="releaseDate" type="date" name="releaseDate" th:value="${song.releaseDate}">
+        </div>
+        <div class="row">
+            <label for="visible">Visible</label>
+            <input id="visible" type="checkbox" name="visible" th:checked="${song.visible}">
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="/songs/ui/list" class="btn">Cancel</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

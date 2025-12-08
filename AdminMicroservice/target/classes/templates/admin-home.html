@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<header>
+    <h2>Welcome, [[${admin.username}]]</h2>
+    <nav>
+        <a href="/songs/ui/list">Songs</a>
+        <a href="/songs/ui/add">Add Song</a>
+        <form method="post" action="/admin/logout" style="display:inline; margin-left:12px;">
+            <button type="submit">Logout</button>
+        </form>
+    </nav>
+    <hr>
+    </header>
+
+<main>
+    <p>Use the navigation above to manage songs.</p>
+</main>
+
+</body>
+</html>

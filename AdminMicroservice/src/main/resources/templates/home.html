@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<style>
+    body { font-family: Arial, sans-serif; max-width: 720px; margin: 40px auto; }
+    .card { border: 1px solid #ddd; padding: 24px; border-radius: 8px; }
+    .muted { color: #666; }
+    .actions { margin-top: 14px; display:flex; gap:10px; flex-wrap:wrap; }
+    .field { margin-bottom: 14px; }
+    input[type=text], input[type=password] { width: 100%; padding: 10px; box-sizing: border-box; }
+    button { background:#1976d2; color:#fff; border:none; padding:10px 16px; border-radius:6px; cursor:pointer; }
+    a { color:#1976d2; text-decoration:none; }
+    .btn-secondary { background:#fff; color:#1976d2; border:1px solid #1976d2; }
+    h2 { margin-top: 0; }
+</style>
+
+<div class="card">
+    <h2>Admin Home</h2>
+    <p class="muted">Welcome. Please choose an option to continue.</p>
+    <div class="actions">
+        <a href="/admin/login"><button type="button">Login</button></a>
+        <a href="/admin/register"><button type="button" class="btn-secondary">Register</button></a>
+    </div>
+    <p class="muted" style="margin-top:12px; font-size:13px;">After login, you will be redirected to the Songs dashboard.</p>
+    
+</div>
+
+</body>
+</html>

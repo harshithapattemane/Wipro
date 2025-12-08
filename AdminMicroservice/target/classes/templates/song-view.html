@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<style>
+    :root {
+        --accent: #2563eb;
+        --accent-2: #1e40af;
+        --border: #e5e7eb;
+        --bg: #f8fafc;
+        --muted: #6b7280;
+        --danger: #b91c1c;
+        --card-bg: #ffffff;
+    }
+    body { font-family: Arial, sans-serif; margin: 24px; background: var(--bg); }
+    header { margin-bottom: 16px; }
+    h1, h2, h3 { margin: 0; }
+    nav a, nav button { display: inline-block; margin-right: 8px; }
+    .btn { padding: 8px 12px; border: 1px solid var(--border); background: #fff; border-radius: 6px; text-decoration: none; color: #111; }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); }
+    .btn-danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+    .page { display:flex; flex-direction: column; gap: 12px; }
+    .card { background: var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:16px; }
+    .hero { display:flex; align-items: center; gap: 12px; justify-content: space-between; flex-wrap: wrap; }
+    .title { font-size: 22px; font-weight: 600; }
+    .subtitle { color: var(--muted); margin-top: 4px; }
+    .meta { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .item { border:1px solid var(--border); border-radius:8px; padding: 12px; background:#fff; }
+    .label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .value { font-size: 15px; color:#111; }
+    /* Visible badge: simple rectangular white box to match list */
+    .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; border:1px solid var(--border); background:#fff; color:#111; }
+    .actions { display:flex; gap:8px; flex-wrap: wrap; }
+    .alert-success { margin:0 0 12px 0; padding:10px 12px; border:1px solid #a7f3d0; background:#ecfdf5; color:#065f46; border-radius:6px; }
+    form.inline { display:inline; }
+    @media (max-width: 720px) { .meta { grid-template-columns: 1fr; } }
+    </style>
+
+<header>
+    <nav>
+        <a class="btn" href="/songs/ui/list">All Songs</a>
+        <a class="btn" href="/admin/home">Home</a>
+        <form method="post" action="/admin/logout" class="inline">
+            <button type="submit" class="btn">Logout</button>
+        </form>
+    </nav>
+</header>
+
+<div class="page">
+    <div class="card">
+        <div th:if="${success}" class="alert-success">
+            <span th:text="${success}"></span>
+        </div>
+        <div class="hero">
+            <div>
+                <div class="title" th:text="${song.name}"></div>
+                <div class="subtitle">
+                    <span th:text="${song.singer != null ? song.singer : 'Unknown singer'}"></span>
+                    <span th:if="${song.album != null}"> • </span>
+                    <span th:text="${song.album}" th:if="${song.album != null}"></span>
+                </div>
+            </div>
+            <div class="actions">
+                <span class="badge" th:text="${song.visible ? 'Visible: Yes' : 'Visible: No'}"></span>
+                <a class="btn btn-primary" th:href="@{'/songs/ui/edit/' + ${song.id}}">Edit</a>
+                <form th:action="@{'/songs/ui/delete/' + ${song.id}}" method="post" class="inline">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this song?');">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-bottom:10px;">Details</h3>
+        <div class="meta">
+            <div class="item">
+                <div class="label">Music Director</div>
+                <div class="value" th:text="${song.musicDirector != null ? song.musicDirector : '-'}"></div>
+            </div>
+            <div class="item">
+                <div class="label">Release Date</div>
+                <div class="value">
+                    <span th:if="${song.releaseDate != null}" th:text="${#temporals.format(song.releaseDate, 'yyyy-MM-dd')}"></span>
+                    <span th:if="${song.releaseDate == null}">-</span>
+                </div>
+            </div>
+        </div>
+        <div class="actions" style="margin-top:12px;">
+            <a class="btn" href="/songs/ui/list">Back to list</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
