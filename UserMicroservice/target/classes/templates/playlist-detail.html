@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Playlist Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root { --primary:#1976d2; --danger:#c62828; --success:#2e7d32; --bg:#f7f7f9; --text:#222; --muted:#666; --border:#e0e0e0; }
+      body { font-family: Arial, sans-serif; color: var(--text); background: var(--bg); margin: 0; padding: 24px; }
+      .container { max-width: 960px; margin: 0 auto; }
+      .actions a, .actions button, .btn { display:inline-block; margin-right:8px; padding:8px 12px; border-radius:6px; text-decoration:none; border:none; cursor:pointer; }
+      .btn-primary { background: var(--primary); color:#fff; }
+      .btn-danger { background: var(--danger); color:#fff; }
+      .btn-plain { background:#fff; color: var(--primary); border:1px solid var(--primary); }
+      .toolbar { display:flex; align-items:center; justify-content: space-between; margin:12px 0 18px; }
+      .toolbar .left, .toolbar .right { display:flex; gap:8px; align-items:center; }
+      table.clean { width:100%; border-collapse:collapse; background:#fff; }
+      table.clean th, table.clean td { border:1px solid var(--border); padding:10px; text-align:left; }
+      table.clean th { background:#fafafa; }
+      .empty { color: var(--muted); background:#fff; border:1px dashed var(--border); padding:16px; border-radius:8px; }
+      form.inline { display:inline-block; margin:0; }
+      .song-name { font-weight:600; margin-right:12px; }
+    </style>
+  </head>
+<body>
+<div class="container">
+  <div class="toolbar">
+    <div class="left">
+      <h2 th:text="${playlist.name}" style="margin:0;">Playlist</h2>
+    </div>
+    <div class="right actions">
+      <button class="btn btn-plain" type="button">Shuffle</button>
+      <a class="btn btn-plain" th:href="@{|/ui/playlists/${playlist.id}/rename|}">Rename</a>
+      <form class="inline" th:action="@{|/ui/playlists/${playlist.id}/delete|}" method="post" onsubmit="return confirm('Delete this playlist?');">
+        <button class="btn btn-danger" type="submit">Delete</button>
+      </form>
+      <a class="btn btn-plain" th:href="@{/ui/playlists}">Back</a>
+      <form class="inline" th:action="@{/ui/logout}" method="post">
+        <button class="btn btn-plain" type="submit">Logout</button>
+      </form>
+    </div>
+  </div>
+
+  <h3>Songs</h3>
+
+  <div th:if="${#lists.isEmpty(songs)}" class="empty" style="margin-bottom:12px;">
+    No songs yet. Use “Add From Catalog (Admin Songs)” to add songs here.
+  </div>
+
+  <table class="clean" th:if="${!#lists.isEmpty(songs)}">
+    <tr th:each="s : ${songs}">
+      <td class="actions">
+        <span class="song-name" th:text="${s.name}" style="margin-right:12px; font-weight:600;">Song Name</span>
+        <button class="btn btn-plain" type="button">Play</button>
+        <button class="btn btn-plain" type="button">Stop</button>
+        <button class="btn btn-plain" type="button">Repeat</button>
+        <form th:action="@{|/ui/playlists/songs/${s.id}/delete|}" method="post" class="inline" style="margin-left:8px;">
+          <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+  </table>
+
+  <p style="margin-top:12px;">
+    <a class="btn btn-primary" th:href="@{|/ui/playlists/${playlist.id}/songs/catalog|}">Add a Song</a>
+  </p>
+</div>
+</body>
+</html>

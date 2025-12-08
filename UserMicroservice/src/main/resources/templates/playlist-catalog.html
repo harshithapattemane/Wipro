@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add a Song</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root { --primary:#1976d2; --danger:#c62828; --success:#2e7d32; --bg:#f7f7f9; --text:#222; --muted:#666; --border:#e0e0e0; }
+      body { font-family: Arial, sans-serif; color: var(--text); background: var(--bg); margin: 0; padding: 24px; }
+      .container { max-width: 960px; margin: 0 auto; }
+      .actions a, .actions button, .btn { display:inline-block; margin-right:8px; padding:8px 12px; border-radius:6px; text-decoration:none; border:none; cursor:pointer; }
+      .btn-primary { background: var(--primary); color:#fff; }
+      .btn-danger { background: var(--danger); color:#fff; }
+      .btn-plain { background:#fff; color: var(--primary); border:1px solid var(--primary); }
+      .toolbar { display:flex; align-items:center; justify-content: space-between; margin:12px 0 18px; }
+      .toolbar .left, .toolbar .right { display:flex; gap:8px; align-items:center; }
+      .card { background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,0.04); }
+      .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:12px; }
+      table.clean { width:100%; border-collapse:collapse; background:#fff; }
+      table.clean th, table.clean td { border:1px solid var(--border); padding:10px; text-align:left; }
+      table.clean th { background:#fafafa; }
+      .empty { color: var(--muted); background:#fff; border:1px dashed var(--border); padding:16px; border-radius:8px; }
+      form.inline { display:inline-block; margin:0; }
+    </style>
+  </head>
+<body>
+<div class="container">
+  <div class="toolbar">
+    <div class="left">
+      <h2 th:text="'Add a Song to: ' + ${playlist.name}" style="margin:0;">Add a Song</h2>
+    </div>
+    <div class="right actions">
+      <a class="btn btn-plain" th:href="@{|/ui/playlists/${playlist.id}|}">Back</a>
+      <a class="btn btn-plain" th:if="${hasFilters}" th:href="@{|/ui/playlists/${playlist.id}/songs/catalog|}">Show all songs</a>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px;">
+    <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:12px;">
+      <form th:action="@{|/ui/playlists/${playlist.id}/songs/catalog|}" method="get" class="card" style="padding:12px; margin:0;">
+        <label style="display:block; margin-bottom:6px;">Search by Name</label>
+        <input type="text" name="name" th:value="${name}" style="width:100%; padding:8px; box-sizing:border-box; margin-bottom:8px;" />
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+
+      <form th:action="@{|/ui/playlists/${playlist.id}/songs/catalog|}" method="get" class="card" style="padding:12px; margin:0;">
+        <label style="display:block; margin-bottom:6px;">Search by Singer</label>
+        <input type="text" name="singer" th:value="${singer}" style="width:100%; padding:8px; box-sizing:border-box; margin-bottom:8px;" />
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+
+      <form th:action="@{|/ui/playlists/${playlist.id}/songs/catalog|}" method="get" class="card" style="padding:12px; margin:0;">
+        <label style="display:block; margin-bottom:6px;">Search by Album</label>
+        <input type="text" name="album" th:value="${album}" style="width:100%; padding:8px; box-sizing:border-box; margin-bottom:8px;" />
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+
+      <form th:action="@{|/ui/playlists/${playlist.id}/songs/catalog|}" method="get" class="card" style="padding:12px; margin:0;">
+        <label style="display:block; margin-bottom:6px;">Search by Director</label>
+        <input type="text" name="director" th:value="${director}" style="width:100%; padding:8px; box-sizing:border-box; margin-bottom:8px;" />
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <div th:if="${#lists.isEmpty(songs)}" class="empty">
+    No songs found. Try a different search.
+    <div style="margin-top:8px;">
+      <a class="btn btn-plain" th:if="${hasFilters}" th:href="@{|/ui/playlists/${playlist.id}/songs/catalog|}">Show all songs</a>
+    </div>
+  </div>
+
+  <table class="clean" th:if="${!#lists.isEmpty(songs)}">
+    <tr th:each="s : ${songs}">
+      <td th:text="${s.name}">Name</td>
+      <td th:text="${s.singer}">Singer</td>
+      <td th:text="${s.album}">Album</td>
+      <td th:text="${s.musicDirector}">Director</td>
+      <td th:text="${s.releaseDate}">2024-01-01</td>
+      <td>
+        <form th:action="@{|/ui/playlists/${playlist.id}/songs/add-from-admin|}" method="post" class="inline">
+          <input type="hidden" name="songId" th:value="${s.id}">
+          <button class="btn btn-primary" type="submit">Add</button>
+        </form>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

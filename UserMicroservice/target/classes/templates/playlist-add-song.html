@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Song to Playlist</title>
+  </head>
+<body>
+<h2 th:text="'Add Song to Playlist: ' + ${playlist.name}">Add Song</h2>
+
+<form th:action="@{|/ui/playlists/${playlist.id}/songs/add|}" method="post">
+    <label>Song Name:
+        <input type="text" name="name" required>
+      </label>
+    <button type="submit">Add</button>
+  </form>
+
+<p><a th:href="@{|/ui/playlists/${playlist.id}|}">Back to Playlist</a></p>
+</body>
+</html>

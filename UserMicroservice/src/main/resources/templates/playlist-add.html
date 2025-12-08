@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Playlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root { --primary:#1976d2; --danger:#c62828; --success:#2e7d32; --bg:#f7f7f9; --text:#222; --muted:#666; --border:#e0e0e0; }
+      body { font-family: Arial, sans-serif; color: var(--text); background: var(--bg); margin: 0; padding: 24px; }
+      .container { max-width: 960px; margin: 0 auto; }
+      .actions a, .actions button, .btn { display:inline-block; margin-right:8px; padding:8px 12px; border-radius:6px; text-decoration:none; border:none; cursor:pointer; }
+      .btn-primary { background: var(--primary); color:#fff; }
+      .btn-danger { background: var(--danger); color:#fff; }
+      .btn-plain { background:#fff; color: var(--primary); border:1px solid var(--primary); }
+      .toolbar { display:flex; align-items:center; justify-content: space-between; margin:12px 0 18px; }
+      .toolbar .left, .toolbar .right { display:flex; gap:8px; align-items:center; }
+      .card { background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,0.04); }
+      .muted { color: var(--muted); }
+    </style>
+</head>
+<body>
+<div class="container">
+  <div class="toolbar">
+    <div class="left">
+      <h2 style="margin:0;">Create Playlist</h2>
+    </div>
+    <div class="right actions">
+      <a class="btn btn-plain" th:href="@{/ui/playlists}">Back</a>
+      <a class="btn btn-plain" th:href="@{/ui/home}">Home</a>
+      <form class="inline" th:action="@{/ui/logout}" method="post">
+        <button class="btn btn-plain" type="submit">Logout</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="muted" style="margin-top:0;">Give your playlist a short, memorable name. You can rename it later.</p>
+    <form th:action="@{/ui/playlists/new}" method="post" class="actions" style="display:block; margin-top:8px;">
+      <label style="display:block; margin-bottom:8px;">Playlist Name</label>
+      <input type="text" name="name" placeholder="e.g., My Favorites" required style="width:100%; padding:10px; box-sizing:border-box; margin-bottom:12px;" />
+      <button class="btn btn-primary" type="submit">Create Playlist</button>
+    </form>
+  </div>
+
+  <div style="margin-top:12px;">
+    <span class="muted"> “Add Songs” </span>
+  </div>
+</div>
+</body>
+</html>
