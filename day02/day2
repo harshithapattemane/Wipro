@@ -1,1 +1,160 @@
+//QUESTION 1
 
+
+
+import java.util.Scanner;
+public class Main {
+
+    public static void main(String[] args) {
+       Scanner input = new Scanner(System.in);
+        int size = input.nextInt();  
+        int[] arr = new int[size];
+         // read the array elements
+        for (int i = 0; i < size; i++) {
+            arr[i] = input.nextInt();
+        }
+        
+        sumArray(arr,size);
+        
+    }
+    
+    public static void sumArray(int[] arr,int size)
+    {
+      //write logic here and display sum
+      int sum=0;
+      for(int i=0;i<arr.length;i++)
+      {
+          sum += arr[i];
+      }
+      System.out.println("the sum of the elements in the array = "+sum);
+      
+    }
+}
+
+
+
+//QUESTION 2
+
+
+
+import java.util.Scanner;
+
+public class MultidimensionalArrayExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // TODO: Write your code here
+
+        int rows=scanner.nextInt();
+        int cols=scanner.nextInt();
+
+        int[][] arr=new int[rows][cols];
+
+        for(int i=0;i<rows;i++)
+        {
+            for(int j=0;j<cols;j++)
+            {
+                arr[i][j]=scanner.nextInt();
+            }
+        }
+          for(int i=0;i<rows;i++)
+        {
+            for(int j=0;j<cols;j++)
+            {
+                System.out.print(arr[i][j]+" ");
+            }
+            System.out.println();
+        }
+        scanner.close();
+    }
+}
+
+
+
+//QUESTION 3
+
+import java.util.Scanner;
+public class Main {
+
+    public static String reverseWords(String str){
+        String reversed="";
+        String word="";
+
+        for(int i=0;i<str.length();i++){
+            
+            char ch=str.charAt(i);
+
+            if(ch==' '){
+                reversed+=reverseWord(word)+" ";
+                word="";
+            }
+            else
+            {
+                word+=ch;
+            }
+        }
+        reversed+=reverseWord(word);
+        return reversed;
+
+    }
+    public static String reverseWord(String word)
+    {
+        String rev="";
+        for(int i=word.length()-1;i>=0;i--)
+        {
+            rev+=word.charAt(i);
+        }
+        return rev;
+    }
+    public static void main(String[] args) {
+
+        //write your answer here
+        Scanner sc =new Scanner(System.in);
+    
+        String input=sc.nextLine();
+
+        String result=reverseWords(input);
+
+        
+        System.out.println(result);
+
+        sc.close();
+    }
+}
+
+
+
+
+//QUESTION 4
+
+
+
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        String s =sc.nextLine ();
+
+        int[] freq=new int[26];
+
+        for(int i=0;i<s.length();i++)
+        {
+            char ch=s.charAt(i);
+            freq[ch-'a']++;
+        }
+        //write your answer here
+
+        int maxFreq=0;
+        for(int i=0;i<26; i++)
+        {
+            if(freq[i]>maxFreq)
+            {
+                maxFreq=freq[i];
+            }
+        }
+        int moves=s.length()-maxFreq;
+        System.out.println(moves);
+
+        sc.close();
+    }
+}
