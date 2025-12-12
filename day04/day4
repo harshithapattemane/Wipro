@@ -1,1 +1,258 @@
+// QUESTION 1
 
+
+
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+class Main
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc = new Scanner(System.in);
+		double length=sc.nextDouble();
+		double width=sc.nextDouble();
+		Rectangle rectangle1 = new Rectangle(length,width);
+		double area1 = rectangle1.calculateArea();
+		double perimeter1 = rectangle1.calculatePerimeter();
+
+		System.out.println("Rectangle 1: ");
+		System.out.println("Length: " + rectangle1.getLength());
+		System.out.println("Width: " + rectangle1.getWidth());
+		System.out.println("Area: " + area1);
+		System.out.println("Perimeter: " + perimeter1);
+	}
+}
+
+class Rectangle {
+
+// your solution
+
+private double length;
+private double width;
+
+public Rectangle(double length, double width)
+{
+	this.length=length;
+	this.width=width;
+
+}
+
+public double getLength()
+{
+	return length;
+}
+
+public double getWidth()
+{
+	return width;
+}
+
+public double calculateArea()
+{
+	return length*width;
+}
+
+public double calculatePerimeter()
+{
+	return 2*(length+width);
+}
+}
+
+
+
+//QUESTION 2
+
+
+
+public class Main {
+
+    public static void main(String[] args) {
+        Vehicle v=new Vehicle();
+        Scooter s=new Scooter();
+        Car c=new Car();
+        //write your answer here
+
+        v.noOfWheels();
+        s.noOfWheels();
+        c.noOfWheels();
+    }
+}
+
+class Vehicle
+{
+    void noOfWheels()
+    {
+        System.out.println("No of wheels undefined");
+    }
+}
+
+class Scooter extends Vehicle{
+    void noOfWheels()
+    {
+        System.out.println("No of wheels 2");
+    }
+}
+
+class Car extends Vehicle{
+    void noOfWheels()
+    {
+        System.out.println("No of wheels 4");
+    }
+}
+
+
+
+//QUESTION 3
+
+
+
+import java.util.Scanner;
+import java.util.*;
+
+public class Test {
+    public static void main(String args[])
+    {
+        Scanner sc=new Scanner(System.in);
+        int x= sc.nextInt();
+        int y= sc.nextInt();
+        int z= sc.nextInt();
+        MountainBike mb = new MountainBike(x,y,z);
+        System.out.println(mb.toString());
+    }
+}
+
+
+class Bicycle {
+    // the Bicycle class has two fields
+    public int gear;
+    public int speed;
+ 
+    // the Bicycle class has one constructor
+    public Bicycle(int gear, int speed)
+    {
+        //code
+        this.gear=gear;
+        this.speed=speed;
+    }
+ 
+    // the Bicycle class has three methods
+    public void applyBrake(int decrement)
+    {
+       //code
+       speed-=decrement;
+    }
+ 
+    public void speedUp(int increment)
+    {
+       //code
+       speed+=increment;
+    }
+ 
+    // toString() method to print info of Bicycle
+    public String toString()
+    {
+        return ("No of gears are " + gear + "\n"
+                + "speed of bicycle is " + speed);
+    }
+}
+ 
+// derived class
+class MountainBike extends Bicycle {
+ 
+    // the MountainBike subclass adds one more field
+    public int seatHeight;
+ 
+    // the MountainBike subclass has one constructor
+    public MountainBike(int gear, int speed,
+                        int startHeight)
+    {
+        // invoking base-class(Bicycle) constructor
+       //code
+       super(gear,speed);
+       seatHeight=startHeight;
+    }
+ 
+    // the MountainBike subclass adds one more method
+    public void setHeight(int newValue)
+    {
+        seatHeight = newValue;
+    }
+ 
+    // overriding toString() method
+    // of Bicycle to print more info
+    @Override public String toString()
+    {
+        return (super.toString() + "\nseat height is "
+                + seatHeight);
+    }
+}
+
+
+
+//QUESTION 4
+
+
+
+class Main
+{
+public static void main(String args[])
+{
+// create boxes using the various
+// constructors
+ThreeDimensionShape shape1 = new ThreeDimensionShape(5, 6, 7); 
+ThreeDimensionShape shape2 = new ThreeDimensionShape();
+ThreeDimensionShape shape3 = new ThreeDimensionShape(8);
+
+double volume;
+
+// get volume of first box volume = shape1.volume();
+ volume=shape1.volume();
+System.out.println("Volume of shape1 is " + volume);
+
+// get volume of second box volume = shape2.volume();
+volume=shape2.volume();
+System.out.println("Volume of shape2 is " + volume);
+
+// get volume of cube volume = shape3.volume();
+volume=shape3.volume();
+System.out.println("Volume of shape3 is " + volume);
+}
+}
+class ThreeDimensionShape
+ 
+{
+double width, height, depth;
+
+// constructor used when all dimensions are defined 
+ThreeDimensionShape (double w, double h, double d)
+{
+   this.width=w;
+   this.height=h;
+   this.depth=d;
+     //write your code here
+}
+
+// constructor used when one dimension is defined
+
+ThreeDimensionShape (double l)
+{
+ //write your code here
+ width=height=depth=l;
+}
+
+// constructor used when no dimension is specified 
+ThreeDimensionShape()
+{
+   //write your code here
+    width=height=depth=0;
+
+}
+
+
+// compute and return volume 
+double volume()
+{
+return width * height * depth;
+}
+}
