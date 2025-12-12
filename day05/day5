@@ -1,1 +1,224 @@
+//QUESTION 1
 
+
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+class Test {
+    public static void main(String args[] ) throws Exception {
+        
+        // Write your code here
+
+        Scanner sc=new Scanner(System.in);
+        boolean valid=false;
+
+        while(!valid)
+        {
+            try
+            {
+                int n1=sc.nextInt();
+                int n2=sc.nextInt();
+
+                int re=n1/n2;
+                System.out.println("Result: "+re);
+                valid=true;
+            }
+
+            catch(InputMismatchException e)
+            {
+                System.out.println("Invalid input. Please enter an integer.");
+                sc.nextLine();
+            }
+
+            catch(ArithmeticException e)
+            {
+                System.out.println("Cannot divide by zero. Please enter a valid divisor.");
+            }
+        }
+
+    }
+}
+
+
+
+//QUESTION 2
+
+
+
+import java.util.Scanner;
+public class Test {
+public static void main(String[] args) {
+    Scanner scn = new Scanner(System.in);
+        //write your answer here
+        try
+        {
+        String input=scn.nextLine();
+        int num=Integer.parseInt(input);
+
+        if(99%num==0)
+        {
+            System.out.println(num+" is a factor of 99");
+        }
+        else
+        {
+            System.out.println(num+" is a not a factor of 99");
+        }
+    }
+
+    catch(ArithmeticException e)
+    {
+        System.out.println("Arithmetic Exception "+e);
+
+    }
+    catch(NumberFormatException e)
+    {
+        System.out.println("Number Format Exception "+e);
+
+    }
+
+}
+}
+
+
+//QUESTION 3
+
+
+
+import java.util.*;
+public class Main {
+
+    public static void main(String[] args) {
+  Scanner s=new Scanner(System.in);
+  String text =s.nextLine();
+  System.out.println("Original string: "+text);
+		   
+			  try {
+		      checkVowels(text);
+          System.out.println("String contains vowels");
+           }
+        catch(NoVowelsException e)
+        {
+          System.out.println(e.getMessage());
+        }
+    }
+
+public static void checkVowels(String text) throws NoVowelsException
+      {
+        text=text.toLowerCase();
+        if(!(text.contains("a")||text.contains("e")||text.contains("i")||text.contains("o")||text.contains("u")))
+        {
+          throw new NoVowelsException("String doesnot contain any vowels");
+        }
+        
+      }
+}
+class NoVowelsException extends Exception
+{
+  public NoVowelsException(String message)
+  {
+    super(message);
+  }  
+}
+
+
+
+
+//QUESTION 4
+
+
+
+
+import java.util.*;
+
+public class DataAnalyzer<T extends Number & Comparable<T>> {
+   //define the required methods
+   private T[] data;
+   public DataAnalyzer(T[] data)
+   {
+     this.data=data;
+   }
+
+   public double calculateAverage()
+   {
+     double sum=0.0;
+     for(T value:data)
+     {
+       sum+=value.doubleValue();
+     }
+     return sum/data.length;
+   }
+
+   public T findMaximum()
+   {
+     T max=data[0];
+     for(T value:data)
+     {
+       if(value.compareTo(max)>0)
+       {
+         max=value;
+       }
+     }
+     return max;
+   }
+   
+    public void dataSummary() {
+        System.out.println("Data Summary:");
+        System.out.println("Average: " + calculateAverage());
+        System.out.println("Maximum: " + findMaximum());
+    }
+
+    public static void main(String[] args) {
+        // Example with integers
+        Scanner sc = new Scanner(System.in);
+        int ch = sc.nextInt();
+        
+          int size = sc.nextInt();
+        if(ch==1)
+        {
+        Integer[] integerData = new Integer[size];
+        for(int i=0;i<size;i++)
+        {
+          integerData[i] = sc.nextInt();
+        }
+        DataAnalyzer<Integer> integerAnalyzer = new DataAnalyzer<>(integerData);
+        integerAnalyzer.dataSummary();
+        }
+        else if(ch==2)
+        {
+        // Example with doubles
+        Double[] doubleData = new Double[size];
+        for(int i=0;i<size;i++)
+        {
+          doubleData[i] = sc.nextDouble();
+        }
+        
+        DataAnalyzer<Double> doubleAnalyzer = new DataAnalyzer<>(doubleData);
+        doubleAnalyzer.dataSummary();
+        }
+        else if(ch==3)
+        {
+        // Example with doubles
+        Short[] shortData = new Short[size];
+        for(int i=0;i<size;i++)
+        {
+          shortData[i] = sc.nextShort();
+        }
+        
+        DataAnalyzer<Short> doubleAnalyzer = new DataAnalyzer<>(shortData);
+        doubleAnalyzer.dataSummary();
+        }
+        else if(ch==4)
+        {
+        // Example with doubles
+        Float[] floatData = new Float[size];
+        for(int i=0;i<size;i++)
+        {
+          floatData[i] = sc.nextFloat();
+        }
+        
+        DataAnalyzer<Float> doubleAnalyzer = new DataAnalyzer<>(floatData);
+        doubleAnalyzer.dataSummary();
+        }
+    }
+}
