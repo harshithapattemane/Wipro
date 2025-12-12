@@ -1,1 +1,30 @@
 
+//QUESTION 1
+
+
+Select 
+    s.year,
+    s.semester, 
+    COUNT(Distinct s.professor_id) AS no_of_professor
+    From schedule s
+    where s.course_id between 1 and 10
+    group by s.year,s.semester
+    order by s.year ASC;
+
+
+//QUESTION 2
+
+
+Select * From product
+Where category IN('furniture','laptop','mobile')
+AND price<50000;
+
+//QUESTION 3
+
+
+Select e.FirstName,e.LastName,d.DepartmentName,e.Salary
+From Employees e 
+Join Departments d 
+On e.DepartmentID=d.DepartmentID
+where e.Salary>(Select AVG(Salary) FROM Employees where DepartmentID=e.DepartmentID)
+Order by e.Salary ASC;
