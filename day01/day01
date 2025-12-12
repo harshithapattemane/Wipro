@@ -1,3 +1,7 @@
+
+
+//QUESTION 1
+
 import java.util.Scanner;
 
 public class ArithmeticOperations {
@@ -20,5 +24,70 @@ public class ArithmeticOperations {
         System.out.println("Quotient: "+quotient);
         System.out.println("Remainder: "+remainder);
         scanner.close();
+    }
+}
+
+
+
+//QUESTION 2
+
+import java.util.Scanner;
+
+public class LogicalOperatorsExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean input1 = scanner.nextBoolean();
+        boolean input2 = scanner.nextBoolean();
+        
+        boolean result1=input1 && input2;
+        boolean result2=input1||input2;
+
+        System.out.println(result1);
+        System.out.println(result2);
+        // TODO: Write your code here
+    }
+}
+
+
+
+//QUESTION 3
+
+import java.util.Scanner;
+
+public class RelationalOperatorExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num1 = scanner.nextInt();
+        int num2 = scanner.nextInt();
+
+        boolean res=num1>num2;
+        System.out.println(res);
+        // TODO: Write your code here
+    }
+}
+
+
+
+
+//QUESTION 4
+
+import java.util.Scanner;
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+
+        int num=sc.nextInt();
+
+        if(num%2==0)
+        {
+            System.out.println("No is Even");
+
+        }
+        else
+        {
+            System.out.println("No is odd");
+        }
+        //write your answer here
     }
 }
